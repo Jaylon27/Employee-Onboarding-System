@@ -1,0 +1,8 @@
+certs/
+env/
+app/__pycache__
+test.db
+infrastructre/terraform.tfvars
+
+
+
