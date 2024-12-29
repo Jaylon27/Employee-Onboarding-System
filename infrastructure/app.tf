@@ -1,5 +1,5 @@
 resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = "${prefix}-appserviceplan"
+  name                = "${var.prefix}-appserviceplan"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -7,10 +7,13 @@ resource "azurerm_app_service_plan" "app_service_plan" {
     tier = "Standard"
     size = "S1"
   }
+
+  kind = "Linux"
+  reserved = true
 }
 
 resource "azurerm_app_service" "app_service" {
-  name                = "${prefix}-app-service"
+  name                = "${var.prefix}-app-service"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
@@ -19,29 +22,32 @@ resource "azurerm_app_service" "app_service" {
     type = "SystemAssigned"
   }
 
+   site_config {
+    linux_fx_version = "DOCKER|${azurerm_container_registry.registry.login_server}/employeeonboardingsystem:latest"
+  }
+
+  app_settings = {
+    UseOnlyInMemoryDatabase      = "true"
+    ASPNETCORE_ENVIRONMENT       = "Docker"
+    ASPNETCORE_HTTP_PORTS        = "80"
+  }
+
 }
 
 resource "azurerm_container_registry" "registry" {
 
-  name                = "${prefix}registry" 
-  resource_group_name = azurerm_resource_group.hub.name
-  location            = azurerm_resource_group.hub.location
+  name                = "${var.prefix}registry"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
-  admin_enabled       = true 
+  admin_enabled       = true
 }
 
-# Assign db_datareader role to Managed Identity for SQL Database access
-resource "azurerm_role_assignment" "db_datareader" {
-  principal_id        = azurerm_app_service.app_service.identity[0].principal_id
-  role_definition_name = "db_datareader"  
-  scope               = azurerm_sql_database.db.id
-}
-
-# Assign db_datawriter role to Managed Identity for SQL Database access
-resource "azurerm_role_assignment" "db_datawriter" {
-  principal_id        = azurerm_app_service.app_service.identity[0].principal_id
-  role_definition_name = "db_datawriter"  
-  scope               = azurerm_sql_database.db.id
+# Assign role to Managed Identity for SQL Database access
+resource "azurerm_role_assignment" "db_contributor" {
+  principal_id         = azurerm_app_service.app_service.identity[0].principal_id
+  role_definition_name = "SQL DB Contributor"
+  scope                = azurerm_mssql_database.db.id
 }
 
 resource "azurerm_role_assignment" "acr_pull" {

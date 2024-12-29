@@ -52,7 +52,7 @@ def update_employee_details(employee_update: schemas.EmployeeUpdate, employee_id
     return schemas.EmployeeRead.from_orm(employee)
 
 
-@router.delete("/employees/{employee_id}", response_model=schemas.EmployeeRead, status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/employees/{employee_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_employee(employee_id: int, db: Session = Depends(database.get_db)):
 
     employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
@@ -62,6 +62,4 @@ def delete_employee(employee_id: int, db: Session = Depends(database.get_db)):
 
     db.delete(employee)
     db.commit()
-
-    return schemas.EmployeeRead.from_orm(employee)
 

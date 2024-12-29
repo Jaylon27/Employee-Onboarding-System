@@ -56,7 +56,7 @@ def get_list_of_employees(department_id: int, db: Session = Depends(database.get
     
     return employees
 
-@router.delete("/departments/{department_id}", response_model=schemas.DepartmentRead, status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/departments/{department_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_department(department_id: int, db: Session = Depends(database.get_db)):
     department = db.query(models.Department).filter(models.Department.id == department_id).first()
     
@@ -65,5 +65,3 @@ def delete_department(department_id: int, db: Session = Depends(database.get_db)
 
     db.delete(department)
     db.commit()
-
-    return schemas.DepartmentRead.from_orm(department)

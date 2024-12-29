@@ -34,3 +34,8 @@ variable "certificate_password" {
   type        = string
   sensitive   = true
 }
+
+variable "ssl_certificate" {
+  description = "Base64 encoded SSL certificate"
+  type        = string
+}

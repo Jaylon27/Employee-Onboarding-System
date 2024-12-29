@@ -20,6 +20,16 @@ resource "azurerm_subnet" "app_subnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
+
+  delegation {
+    name = "MicrosoftWebServerFarms"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
 }
 
 # Application Subnet within the virtual network
@@ -31,7 +41,7 @@ resource "azurerm_subnet" "app_gateway_subnet" {
 }
 
 resource "azurerm_public_ip" "public_ip" {
-  name                = "${prefix}-pip"
+  name                = "${var.prefix}-pip"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
@@ -46,11 +56,11 @@ locals {
   listener_name                  = "${azurerm_virtual_network.vnet.name}-httplstn"
   request_routing_rule_name      = "${azurerm_virtual_network.vnet.name}-rqrt"
   redirect_configuration_name    = "${azurerm_virtual_network.vnet.name}-rdrcfg"
-  ssl_certificate_name           = "my-cert-1" 
+  ssl_certificate_name           = "my-cert-1"
 }
 
 resource "azurerm_application_gateway" "app_gateway" {
-  name                = "${prefix}-appgateway"
+  name                = "${var.prefix}-appgateway"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -61,7 +71,7 @@ resource "azurerm_application_gateway" "app_gateway" {
   }
 
   gateway_ip_configuration {
-    name      = "${prefix}-gateway-ip-configuration"
+    name      = "${var.prefix}-gateway-ip-configuration"
     subnet_id = azurerm_subnet.app_gateway_subnet.id
   }
 
@@ -78,13 +88,13 @@ resource "azurerm_application_gateway" "app_gateway" {
   # SSL certificate to Application Gateway
   ssl_certificate {
     name     = local.ssl_certificate_name
-    password = var.certificate_password 
-    data = filebase64("${path.module}/certs/httpd.pfx")                          
-}
+    password = var.certificate_password
+    data     = filebase64("${var.ssl_certificate}")
+  }
 
   backend_address_pool {
-    name = local.backend_address_pool_name
-    fqdns = [azurerm_app_service.app_service.internal.azurewebsites.net]
+    name  = local.backend_address_pool_name
+    fqdns = [azurerm_app_service.app_service.default_site_hostname]
 
   }
 

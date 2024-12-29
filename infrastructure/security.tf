@@ -8,10 +8,10 @@ resource "azurerm_network_security_group" "app_subnet_nsg" {
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "443"
-    source_address_prefix     = azurerm_application_gateway.app_gateway.frontend_ip_configuration[0].private_ip_address
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 
@@ -20,10 +20,10 @@ resource "azurerm_network_security_group" "app_subnet_nsg" {
     priority                   = 200
     direction                  = "Outbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "1433"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "1433"
+    source_address_prefix      = "*"
     destination_address_prefix = azurerm_subnet.database_subnet.address_prefixes[0]
   }
 
@@ -32,10 +32,10 @@ resource "azurerm_network_security_group" "app_subnet_nsg" {
     priority                   = 300
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "*"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
@@ -50,10 +50,10 @@ resource "azurerm_network_security_group" "app_gateway_subnet_nsg" {
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "443"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 
@@ -62,10 +62,10 @@ resource "azurerm_network_security_group" "app_gateway_subnet_nsg" {
     priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "*"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 
@@ -74,10 +74,10 @@ resource "azurerm_network_security_group" "app_gateway_subnet_nsg" {
     priority                   = 300
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "65530"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "65530"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
@@ -92,10 +92,10 @@ resource "azurerm_network_security_group" "database_subnet_nsg" {
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "1433"
-    source_address_prefix     = azurerm_subnet.app_subnet.address_prefixes[0]
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "1433"
+    source_address_prefix      = azurerm_subnet.app_subnet.address_prefixes[0]
     destination_address_prefix = "*"
   }
 
@@ -104,10 +104,10 @@ resource "azurerm_network_security_group" "database_subnet_nsg" {
     priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "1433"
-    source_address_prefix     = azurerm_private_endpoint.database_endpoint.private_ip_address
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "1433"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 
@@ -116,10 +116,10 @@ resource "azurerm_network_security_group" "database_subnet_nsg" {
     priority                   = 300
     direction                  = "Inbound"
     access                     = "Deny"
-    protocol                  = "Tcp"
-    source_port_range         = "*"
-    destination_port_range    = "*"
-    source_address_prefix     = "*"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
