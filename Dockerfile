@@ -12,11 +12,12 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY . /app/
+# Copy only the contents of the local 'app' subdirectory into the container's '/app' directory
+COPY app /app/
 
 # Expose the port FastAPI will run on
 EXPOSE 8000
 
 # Command to run the application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
