@@ -1,6 +1,6 @@
 certs/
 test.db
-infrastructre/terraform.tfvars
+terraform.tfvars
 .terraform
 .terraform.lock.hcl
 
