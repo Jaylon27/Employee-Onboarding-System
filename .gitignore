@@ -7,15 +7,11 @@ test.db
 # Ignore Terraform variables file
 infrastructure/terraform.tfvars
 
-# Ignore Terraform directories and files
-.terraform/
-.terraform.lock.hcl
-
-.terraform
-.terraform.lock.hcl
-
-terraform.tfstate
-users/terraform.tfstate.backup
+## Ignore Terraform-generated files globally
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/.terraform.lock.hcl
 
 
 
