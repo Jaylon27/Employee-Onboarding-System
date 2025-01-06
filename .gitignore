@@ -13,6 +13,6 @@ infrastructure/terraform.tfvars
 **/terraform.tfstate.backup
 **/.terraform.lock.hcl
 
-
+.DS_Store
 
 
