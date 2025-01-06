@@ -15,7 +15,7 @@ infrastructure/terraform.tfvars
 .terraform.lock.hcl
 
 terraform.tfstate
-terraform.tfstate.backup
+users/terraform.tfstate.backup
 
 
 
