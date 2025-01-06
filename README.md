@@ -1,6 +1,6 @@
 # Employee Onboarding Automation System
 
-# Problem Statement
+## Problem Statement
 
 XYZ Corp, a mid-sized company, faces significant challenges in efficiently managing the employee onboarding process. The HR department is responsible for manually tracking new hire details, such as contact information, roles, departments, and equipment needs. This manual process: 
 
@@ -85,14 +85,13 @@ This system uses a range of Azure resources to provide a robust infrastructure f
         - The Azure Private Endpoint provides secure communication with the SQL database using a private IP address, ensuring that traffic does not traverse the public internet. 
         - A private DNS zone is used to resolve the SQL server's private IP.
 
-# Infrastructure Deployment via Azure DevOps
-The infrastructure for this application is managed using Terraform and deployed automatically via a CI/CD pipeline in Azure DevOps. This pipeline ensures that all resources required for the application are provisioned and managed in a consistent and repeatable manner. 
+The infrastructure for this system is managed using Terraform and deployed automatically via a CI/CD pipeline in Azure DevOps. This pipeline ensures that all resources required for the system are provisioned and managed in a consistent and repeatable manner. 
 
 ## Python FastAPI Application
 
 The Python FastAPI application provides a backend for managing employee and department data. It integrates with the Azure cloud infrastructure, utilizing Azure SQL Database for persistent storage and Azure networking components for secure communication. Below is a breakdown of the FastAPI components and their roles in the system:
 
-### Key Components
+### API Endpoints
 
 1. **Employee Endpoints (employee.py)**
 
@@ -124,21 +123,21 @@ The Python FastAPI application provides a backend for managing employee and depa
   
 - The backend communicates with the Azure SQL Database through private endpoints, ensuring secure data access.
 
-This system forms the backend for employee and department management, with secure and efficient integration into the Azure cloud infrastructure. It is designed for scalability and security, leveraging Azure's managed services like SQL Database, private networking, and App Service.
-
 ### Deployment and Containerization
 
 - To containerize the FastAPI application, a Dockerfile is included, which defines the steps necessary to build and run the application within a Docker container. The Docker container allows the application to run consistently, regardless of where it is deployed.
 
 - The application is deployed through an automated Azure DevOps pipeline, which builds and pushes the Docker image to an Azure Container Registry (ACR) and then deploys it to Azure App Service.
 
-# Automation of User and Group Setup in Microsoft Entra ID
+This system forms the backend for employee and department management, with secure and efficient integration into the Azure cloud infrastructure. It is designed for scalability and security, leveraging Azure's managed services like SQL Database, private networking, and App Service.
+
+## Automation of User and Group Setup in Microsoft Entra ID
 
 This project includes an automated process for setting up users in Microsoft Entra ID and associating them with specific groups based on their department. The process involves exporting employee data from an Azure SQL database, then using Terraform to create users and assign them to predefined groups in Microsoft Entra ID. The automation simplifies and accelerates the user provisioning process, ensuring consistency across the organization.
 
 ---
 
-## Step 1: Export Employee Data from Azure SQL Database
+### Step 1: Export Employee Data from Azure SQL Database
 
 Administrators can export employee data from the Azure SQL database into a CSV file using the following command:
 
@@ -157,22 +156,22 @@ This command queries the employee and department data from the employees table i
 
 ---
 
-## Step 2: Terraform Code for User and Group Creation
+### Step 2: Terraform Code for User and Group Creation
 
 Once the `users.csv` file is generated, administrators execute the Terraform code to automate the creation of users and their assignment to Microsoft Entra ID groups based on their department.
 
-### Groups Setup (`groups.tf`)
+#### Groups Setup (`groups.tf`)
 
 In this Terraform configuration, the following groups are created:
 
 - **Information Technology (IT)** and **IT Managers** groups
 - **Human Resources (HR)** and **HR Managers** groups
 
-### Users Setup (`users.tf`)
+#### Users Setup (`users.tf`)
 
 The users are created based on the data from the CSV file. Each user’s `user_principal_name` is generated using their first and last name, followed by a random suffix. The users are assigned to their respective groups according to their department.
 
-### Sample CSV File (`users.csv`)
+#### Sample CSV File (`users.csv`)
 
 The CSV file contains employee data structured with the following columns:
 
@@ -197,7 +196,7 @@ Alex,Johnson,Cloud Engineer Manager,Information Technology Managers
 
 ---
 
-## Step 3: Execute Terraform Code
+### Step 3: Execute Terraform Code
 Once the users.csv file is prepared, administrators can run the following Terraform commands to apply the configuration:
 
 Initialize Terraform:
