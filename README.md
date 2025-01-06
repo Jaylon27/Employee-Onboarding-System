@@ -1,5 +1,24 @@
 # Employee Onboarding Automation System
 
+## Table of Contents
+1. [Employee Onboarding Automation System](#employee-onboarding-automation-system)
+2. [Problem Statement](#problem-statement)
+3. [Solution](#solution)
+4. [Cloud Architecture](#cloud-architecture)
+   - [Overview](#overview)
+   - [Key Components](#key-components)
+5. [Python FastAPI Application](#python-fastapi-application)
+   - [API Endpoints](#api-endpoints)
+     - [Employee Endpoints](#employee-endpoints-employeepy)
+     - [Department Endpoints](#department-endpoints-departmentpy)
+6. [Integration with Azure Infrastructure](#integration-with-azure-infrastructure)
+7. [Deployment and Containerization](#deployment-and-containerization)
+8. [Automation of User and Group Setup in Microsoft Entra ID](#automation-of-user-and-group-setup-in-microsoft-entra-id)
+   - [Step 1: Export Employee Data](#step-1-export-employee-data-from-azure-sql-database)
+   - [Step 2: Terraform Code](#step-2-terraform-code-for-user-and-group-creation)
+   - [Step 3: Execute Terraform Code](#step-3-execute-terraform-code)
+   - [Step 4: Query Azure AD Groups and Members](#step-4-query-azure-ad-groups-and-members)
+
 ## Problem Statement
 
 XYZ Corp, a mid-sized company, faces significant challenges in efficiently managing the employee onboarding process. The HR department is responsible for manually tracking new hire details, such as contact information, roles, departments, and equipment needs. This manual process: 
@@ -224,7 +243,7 @@ az ad group list --query "[?contains(displayName, 'Information Technology')].{ n
 ```bash
 az ad group list --query "[?contains(displayName, 'Human Resources')].{ name: displayName }" --output tsv
 ```
-![Screenshot](https://github.com/Jaylon27/Employee-Onboarding-System/blob/350af3debdb4a221cd2be5e75ffde25ebb0fc1f1/screenshots/group_member_queries.png)
+![Screenshot](https://github.com/Jaylon27/Employee-Onboarding-System/blob/c9626e8828799fe54f3d9d5ca8bd312c5b199908/screenshots/group_member_queries.png)
 
 #### Query Group Members
 To list the members of specific groups, such as Information Technology and Human Resources, use the following commands:
@@ -243,5 +262,5 @@ az ad group member list --group "Human Resources" --query "[].{ name: displayNam
 ```bash
 az ad group member list --group "Human Resources" --query "[].{ name: displayName, jobTitle: jobTitle }" --output tsv
 ```
-![Screenshot](https://github.com/Jaylon27/Employee-Onboarding-System/blob/350af3debdb4a221cd2be5e75ffde25ebb0fc1f1/screenshots/group_member_queries.png)
+![Screenshot](https://github.com/Jaylon27/Employee-Onboarding-System/blob/c9626e8828799fe54f3d9d5ca8bd312c5b199908/screenshots/group_member_queries.png)
 
