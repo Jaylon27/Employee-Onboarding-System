@@ -11,8 +11,8 @@ infrastructure/terraform.tfvars
 .terraform/
 .terraform.lock.hcl
 
-users/.terraform
-users/.terraform
+.terraform
+.terraform.lock.hcl
 
 
 
