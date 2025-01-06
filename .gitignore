@@ -1,10 +1,15 @@
+# Ignore certificates directory
 certs/
+
+# Ignore SQLite database file
 test.db
+
+# Ignore Terraform variables file
 infrastructure/terraform.tfvars
-.terraform
+
+# Ignore Terraform directories and files
+.terraform/
 .terraform.lock.hcl
-
-
 
 
 
