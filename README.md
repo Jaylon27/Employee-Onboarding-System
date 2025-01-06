@@ -34,8 +34,7 @@ This reduces manual intervention, minimizes errors, and enhances the onboarding 
 ### Overview
 This system uses a range of Azure resources to provide a robust infrastructure for an application that involves web services, networking, database integration, and security. Below is an overview of the architecture and how the components interact:
 
-![Screenshot]
-(https://github.com/Jaylon27/Employee-Onboarding-System/blob/ce444554585770f00d3a0bdfd8e0d6a146e08615/screenshots/cloud_employee_system.png)
+![Screenshot](https://github.com/Jaylon27/Employee-Onboarding-System/blob/ce444554585770f00d3a0bdfd8e0d6a146e08615/screenshots/cloud_employee_system.png)
 
 ### Key Components
 
