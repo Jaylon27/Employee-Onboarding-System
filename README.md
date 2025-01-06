@@ -208,4 +208,17 @@ Apply the deployment:
 ```bash
 terraform apply
 ```
-  
+
+### Step 4: Query Azure AD Groups and Members
+
+Once the users are created and assigned to groups, you can verify their membership using Azure CLI commands. Below are examples of queries and their corresponding results.
+
+##### Query Groups
+To list the groups in Azure AD that match specific keywords like `Information Technology` or `Human Resources`, use the following commands:
+
+```bash
+az ad group list --query "[?contains(displayName, 'Information Technology')].{ name: displayName }" --output tsv
+```
+```bash
+az ad group list --query "[?contains(displayName, 'Human Resources')].{ name: displayName }" --output tsv
+```
