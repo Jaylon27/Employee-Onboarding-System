@@ -222,6 +222,9 @@ az ad group list --query "[?contains(displayName, 'Information Technology')].{ n
 ```bash
 az ad group list --query "[?contains(displayName, 'Human Resources')].{ name: displayName }" --output tsv
 ```
+![Screenshot]
+(https://github.com/Jaylon27/Employee-Onboarding-System/blob/main/screenshots/groups_queries.png)
+
 #### Query Group Members
 To list the members of specific groups, such as Information Technology and Human Resources, use the following commands:
 
@@ -240,4 +243,4 @@ az ad group member list --group "Human Resources" --query "[].{ name: displayNam
 az ad group member list --group "Human Resources" --query "[].{ name: displayName, jobTitle: jobTitle }" --output tsv
 ```
 ![Screenshot]
-(/Users/jaylonjones/Employee File System/screenshots/Screenshot 2025-01-05 at 3.04.37 AM.png) 
+(https://github.com/Jaylon27/Employee-Onboarding-System/blob/main/screenshots/group_member_queries.png) 
