@@ -1,57 +1,68 @@
-# Local variables
-locals {
-  # Filter users by department
-  it_users = {
-    for k, u in azuread_user.users :
-    k => u if u.department == "IT (Information Technology)"
-  }
-
-  hr_users = {
-    for k, u in azuread_user.users :
-    k => u if u.department == "Human Resources"
-  }
-
-  managers = {
-    for k, u in azuread_user.users :
-    k => u if u.job_title == "Manager"
-  }
-}
-
 # IT Group
 resource "azuread_group" "information_tech" {
-  display_name     = "IT (Information Technology) Department"
-  security_enabled = true
+  display_name    = "Information Technology"
+  mail_enabled    = false 
+  security_enabled = true   
+
 }
 
+# Associate IT associates with the Information Technology group
 resource "azuread_group_member" "information_tech_associates" {
-  for_each = local.it_users
+  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.department == "Information Technology" }
+
 
   group_object_id  = azuread_group.information_tech.id
+  member_object_id = each.value.id
+
+}
+
+# IT Managers Group
+resource "azuread_group" "information_tech_managers" {
+  display_name    = "Information Technology Managers"
+  mail_enabled    = false 
+  security_enabled = true   
+
+}
+
+# Associate IT managers with the Information Technology group
+resource "azuread_group_member" "information_tech_managers" {
+  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.department == "Information Technology Managers" }
+
+  group_object_id  = azuread_group.information_tech_managers.id
   member_object_id = each.value.id
 }
 
 # Human Resources Group
 resource "azuread_group" "human_resources" {
-  display_name     = "Human Resources Department"
-  security_enabled = true
+  display_name    = "Human Resources"
+  mail_enabled    = false  
+  security_enabled = true   
+
 }
 
+# Associate HR users with the Human Resources group
 resource "azuread_group_member" "human_resources_associates" {
-  for_each = local.hr_users
+  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.department == "Human Resources" }
+
 
   group_object_id  = azuread_group.human_resources.id
   member_object_id = each.value.id
+
 }
 
-# Managers Group
-resource "azuread_group" "managers" {
-  display_name     = "Managers"
-  security_enabled = true
+# Human Resources Managers Group
+resource "azuread_group" "human_resources_managers" {
+  display_name    = "Human Resources Managers"
+  mail_enabled    = false  
+  security_enabled = true   
+
 }
 
-resource "azuread_group_member" "managers" {
-  for_each = local.managers
+# Associate HR managers with the Human Resources group
+resource "azuread_group_member" "human_resources_managers" {
+for_each = { for u in azuread_user.users: u.mail_nickname => u if u.department == "Human Resources Managers" }
 
-  group_object_id  = azuread_group.managers.id
+
+  group_object_id  = azuread_group.human_resources_managers.id
   member_object_id = each.value.id
 }

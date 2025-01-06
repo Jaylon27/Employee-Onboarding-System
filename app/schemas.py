@@ -22,7 +22,6 @@ class EmployeeUpdate(BaseModel):
 
 class EmployeeRead(EmployeeBase):
     id: int
-    email: str
     department: Optional["DepartmentRead"] = None  # Nested relationship
 
     class Config:

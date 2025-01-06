@@ -23,6 +23,7 @@ variable "admin_password" {
   sensitive   = true
 }
 
+# Name of the SQL database to be created
 variable "sql_db_name" {
   description = "SQL database name"
   type        = string
@@ -35,6 +36,7 @@ variable "certificate_password" {
   sensitive   = true
 }
 
+# Base64 encoded SSL certificate for secure connections
 variable "ssl_certificate" {
   description = "Base64 encoded SSL certificate"
   type        = string

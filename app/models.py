@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date
 from sqlalchemy.orm import relationship
-from app.database import Base
+from .database import Base
 
 class Employee(Base):
     __tablename__ = "employees"
@@ -13,6 +13,7 @@ class Employee(Base):
     is_manager = Column(Boolean, default=False)
     department_id = Column(Integer, ForeignKey("departments.id"))
 
+    # Relationship to link employee to their department
     department = relationship("Department", back_populates="employees", foreign_keys=[department_id])
 
 
@@ -25,6 +26,7 @@ class Department(Base):
     manager_id = Column(Integer, ForeignKey("employees.id"), nullable=True)
     created_at = Column(Date)
 
+    # Relationship to link department to its employees
     employees = relationship("Employee", back_populates="department", foreign_keys=[Employee.department_id])
     manager = relationship("Employee", foreign_keys=[manager_id])
 

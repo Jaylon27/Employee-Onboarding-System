@@ -1,20 +1,26 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from urllib.parse import quote
+import pyodbc 
 
 # Database credentials
 username = "jaylonjones"
-password = "Panthers27!"  # Replace with your actual password
-encoded_password = quote(password)
+password = "Panthers27!"  
+server = "employeesystemdatabaseforonboarding.database.windows.net"
+database = "EmployeeSystemOnboardingDatabaseSQL"
 
-# Updated DATABASE_URL for Azure SQL Database
-DATABASE_URL = f"mssql+pyodbc://{username}:{encoded_password}@employeesystem.database.windows.net:1433/EmployeeSystemOnboardingDatabaseSQL?driver=ODBC+Driver+18+for+SQL+Server&Encrypt=yes&TrustServerCertificate=no&Connection+Timeout=30"
+# Correct Connection string for SQLAlchemy
+connection_string = f"mssql+pyodbc://{username}:{password}@{server}:1433/{database}?driver=ODBC+Driver+18+for+SQL+Server&Encrypt=yes&TrustServerCertificate=no&Connection+Timeout=30"
+
+# Test connection
+try:
+    with pyodbc.connect(connection_string) as conn:
+        print("Connection successful!")
+except Exception as e:
+    print(f"Connection failed: {e}")
 
 # Create the database engine
-engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}  # SQLite-specific
-)
+engine = create_engine(connection_string)
 
 # Create a sessionmaker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

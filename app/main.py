@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine
-from app import models
-from app.employee import router as employee_router
-from app.department import router as department_router
+from .database import engine
+from . import models
+from .employee import router as employee_router
+from .department import router as department_router
 
 models.Base.metadata.create_all(bind=engine)
 

@@ -1,34 +1,44 @@
-# Provider configuration
+# Configure the Azure Active Directory Provider
 provider "azuread" {}
 
-# Retrieve Azure AD domain information
+# Retrieve domain information
 data "azuread_domains" "default" {
   only_initial = true
 }
 
-# Local variables
 locals {
-  # Get the primary domain name
-  domain_name = data.azuread_domains.default.domains[0].domain_name
-
-  # Decode the CSV file into a map
-  users = csvdecode(file("${path.module}/users.csv"))
+  domain_name = data.azuread_domains.default.domains.0.domain_name
+  users       = csvdecode(file("${path.module}/users.csv"))
 }
 
-# Create Azure AD Users
+resource "random_pet" "suffix" {
+  length = 2
+}
+
+# Create users
 resource "azuread_user" "users" {
-  for_each = { for user in local.users : "${user.first_name}.${user.last_name}" => user }
+  for_each = { for user in local.users : user.first_name => user }
 
   user_principal_name = format(
-    "%s%s@%s",
-    substr(lower(each.value.first_name), 0, 1),
+    "%s%s-%s@%s",
+    lower(each.value.first_name),
     lower(each.value.last_name),
+    random_pet.suffix.id,
     local.domain_name
   )
 
-  display_name           = "${each.value.first_name} ${each.value.last_name}"
-  password               = format("Password%s!", length(each.value.first_name)) # Simplified password logic
-  force_password_change  = true
-  department             = each.value.department
-  job_title              = each.value.job_title
+  password = format(
+    "Hello%s%s%s!",
+    lower(each.value.last_name),
+    lower(each.value.first_name),
+    length(each.value.first_name)
+  )
+
+  force_password_change = true
+
+  display_name = "${each.value.first_name} ${each.value.last_name}"
+  department   = each.value.department
+  job_title    = each.value.job_title
 }
+
+
