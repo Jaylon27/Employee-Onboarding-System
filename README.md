@@ -119,7 +119,7 @@ The Python FastAPI application provides a backend for managing employee and depa
    - **Create Employee (`POST /employees/`)**: This endpoint allows the creation of new employees. The data is stored in the Azure SQL Database, and after insertion, employee information (such as name, job title, and department) is written to a CSV file for additional processing.
     ```bash
         curl -X 'POST' \
-        'https://employeesystem-app-service.azurewebsites.net/departments/' \
+        'https://employeesystem-app-service.azurewebsites.net/employees/' \
         -H 'accept: application/json' \
         -H 'Content-Type: application/json' \
         -d '{
