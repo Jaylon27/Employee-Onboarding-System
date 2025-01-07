@@ -51,28 +51,28 @@ This reduces manual intervention, minimizes errors, and enhances the onboarding 
 ## Technologies Used
 
 1. **Azure**   
-**Use Case:** Azure is used for hosting the application (via Azure App Service), managing the database (via Azure SQL Database), providing secure networking (via Virtual Network), and enabling scalable and secure user management and access (via Microsoft Entra ID). Azure also supports CI/CD pipelines through Azure DevOps, and provides monitoring and diagnostics via Application Insights. More information the [Cloud Architecture](#cloud-architecture) section.
+    - **Use Case**: Azure is used for hosting the application (via Azure App Service), managing the database (via Azure SQL Database), providing secure networking (via Virtual Network), and enabling scalable and secure user management and access (via Microsoft Entra ID). Azure also supports CI/CD pipelines through Azure DevOps, and provides monitoring and diagnostics via Application Insights. For more details, refer to the [Cloud Architecture](#cloud-architecture) section.
 
 2. **Terraform**   
-- **Use Case**: Automates the provisioning and management of resources, including Azure infrastructure and Microsoft Entra ID Users & Groups, ensuring consistent, repeatable deployments.
+    - **Use Case**: Automates the provisioning and management of resources, including Azure infrastructure and Microsoft Entra ID Users & Groups, ensuring consistent, repeatable deployments.
 
 3. **Python FastAPI**   
-- **Use Case**: Serves as the backend framework for managing employee and department data with robust routing, validation, and ORM capabilities.
+    - **Use Case**: Serves as the backend framework for managing employee and department data with robust routing, validation, and ORM capabilities.
 
 4. **Docker**  
-- **Use Case**: Packages the FastAPI application into a container for consistent deployment across environments.
+    - **Use Case**: Packages the FastAPI application into a container for consistent deployment across environments.
 
 5. **Microsoft Entra ID (Azure AD)**   
-- **Use Case**: Automates user provisioning and role-based access control for employees during onboarding.
+    - **Use Case**: Automates user provisioning and role-based access control for employees during onboarding.
 
 6. **Azure DevOps**    
-- **Use Case**: Automates the CI/CD pipeline for building, containerizing, and deploying the FastAPI application and Azure cloud infrastructure to Azure.
+    - **Use Case**: Automates the CI/CD pipeline for building, containerizing, and deploying the FastAPI application and Azure cloud infrastructure to Azure.
 
 7. **SQLAlchemy**   
-- **Use Case**: Facilitates interaction with the Azure SQL Database, mapping database tables to Python objects for streamlined data management.
+    - **Use Case**: Facilitates interaction with the Azure SQL Database, mapping database tables to Python objects for streamlined data management.
 
 8. **Bash (SQLCMD)**    
-- **Use Case**: Used to export employee and department data from the Azure SQL Database into a CSV file for Microsoft Entra ID provisioning.
+    - **Use Case**: Used to export employee and department data from the Azure SQL Database into a CSV file for Microsoft Entra ID provisioning.
 
 ---
 
