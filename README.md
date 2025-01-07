@@ -3,6 +3,7 @@
 ## Table of Contents
 1. [Problem Statement](#problem-statement)
 2. [Solution](#solution)
+3. [Technologies Used](#technologies-used)
 3. [Cloud Architecture](#cloud-architecture)
    - [Overview](#overview)
    - [Key Components](#key-components)
@@ -32,7 +33,7 @@ HR administrators struggle with fragmented tools, making it difficult to provide
 
 ## Solution
 
-To address these challenges, I developed an **automated employee onboarding system** leveraging **cloud technologies** with a focus on **Microsoft Entra ID** and **Azure services**. The solution:  
+To address these challenges, I developed an **automated employee onboarding system** leveraging **cloud technologies** with a focus on **Microsoft Entra ID**, **Python**, **Fast API**, **Terraform**  and **Azure services**. The solution:  
 
 - Centralizes employee data.  
 - Automates the onboarding workflow.  
@@ -44,6 +45,34 @@ To address these challenges, I developed an **automated employee onboarding syst
 - **Hosted on Azure**: Provides a scalable, secure environment.  
 
 This reduces manual intervention, minimizes errors, and enhances the onboarding experience for both employees and HR administrators.
+
+---
+
+## Technologies Used
+
+### **Azure**   
+**Use Case:** Azure is used for hosting the application (via Azure App Service), managing the database (via Azure SQL Database), providing secure networking (via Virtual Network), and enabling scalable and secure user management and access (via Microsoft Entra ID). Azure also supports CI/CD pipelines through Azure DevOps, and provides monitoring and diagnostics via Application Insights. More information the [Cloud Architecture](#cloud-architecture) section.
+
+### **Terraform**   
+**Use Case:** Automates the provisioning and management of resources, including Azure infrastructure and Microsoft Entra ID Users & Groups, ensuring consistent, repeatable deployments.
+
+### **Python FastAPI**   
+**Use Case:** Serves as the backend framework for managing employee and department data with robust routing, validation, and ORM capabilities.
+
+### **Docker**  
+**Use Case:** Packages the FastAPI application into a container for consistent deployment across environments.
+
+### **Microsoft Entra ID (Azure AD)**   
+**Use Case:** Automates user provisioning and role-based access control for employees during onboarding.
+
+### **Azure DevOps**    
+**Use Case:** Automates the CI/CD pipeline for building, containerizing, and deploying the FastAPI application and Azure cloud infrastructure to Azure.
+
+### **SQLAlchemy**   
+**Use Case:** Facilitates interaction with the Azure SQL Database, mapping database tables to Python objects for streamlined data management.
+
+### **Bash (SQLCMD)**    
+**Use Case:** Used to export employee and department data from the Azure SQL Database into a CSV file for Microsoft Entra ID provisioning.
 
 ---
 
