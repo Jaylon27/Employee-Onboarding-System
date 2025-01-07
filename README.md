@@ -127,6 +127,16 @@ The Python FastAPI application provides a backend for managing employee and depa
 2. **Department Endpoints (department.py)**
 
    - **Create Department (`POST /departments/`)**: This endpoint creates a new department and saves it in the database.
+    ```bash
+        curl -X 'POST' \
+        'https://employeesystem-app-service.azurewebsites.net/departments/' \
+        -H 'accept: application/json' \
+        -H 'Content-Type: application/json' \
+        -d '{
+        "name": "Finance",
+        "created_at": "2025-01-05"
+        }'
+    ```
    
    - **Get Department Details (`GET /departments/{department_id}`)**: Retrieves detailed information about a department by its ID.
    
