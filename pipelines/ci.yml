@@ -1,0 +1,79 @@
+trigger: none
+pr: none 
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    - task: DownloadSecureFile@1
+      displayName: 'Download PFX File'
+      inputs:
+        secureFile: 'my-cert.pfx'
+        
+     # Verify that the pfx file exist
+    - script: |
+        echo "Checking if pfx file exists: $(Agent.TempDirectory)/my-cert.pfx"
+        ls -l $(Agent.TempDirectory)/my-cert.pfx
+      displayName: 'Verify Certificate and Key Files'
+
+    # Encode the certificate and key files to Base64 and prepare Terraform variables
+    - script: |
+        echo "ssl_certificate = \"$(Agent.TempDirectory)/my-cert.pfx\"" > $(Agent.TempDirectory)/terraform.auto.tfvars
+      displayName: 'Encode and Prepare Terraform Variables'
+
+    # Initialize Terraform with Azure backend configuration
+    - task: TerraformTaskV4@4
+      displayName: Tf init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: '$(SERVICECONNECTION)'
+        backendAzureRmResourceGroupName: 'employeeonboardingsystem-resources'
+        backendAzureRmStorageAccountName: 'employeesstorageaccount1'
+        backendAzureRmContainerName: 'prod-tfstate'
+        backendAzureRmKey: 'prod.terraform.tfstate'
+        workingDirectory: $(Build.SourcesDirectory)/infrastructure
+
+    # Validate the Terraform configuration
+    - task: TerraformTaskV4@4
+      displayName: Tf validate
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: $(Build.SourcesDirectory)/infrastructure
+
+    # Format the Terraform configuration files
+    - task: TerraformTaskV4@4
+      displayName: Tf fmt
+      inputs:
+        provider: 'azurerm'
+        command: 'custom'
+        outputTo: 'console'
+        customCommand: 'fmt'
+        environmentServiceNameAzureRM: '$(SERVICECONNECTION)'
+        workingDirectory: $(Build.SourcesDirectory)/infrastructure
+
+    # Plan the Terraform deployment
+    - task: TerraformTaskV4@4
+      displayName: Tf plan
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        commandOptions: >
+          -out=$(Agent.TempDirectory)/tfplanfile -var-file=$(Agent.TempDirectory)/terraform.auto.tfvars -detailed-exitcode
+        environmentServiceNameAzureRM: '$(SERVICECONNECTION)'
+        workingDirectory: $(Build.SourcesDirectory)/infrastructure
+
+    # Apply the Terraform plan
+    - task: TerraformTaskV4@4
+      displayName: Tf apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        commandOptions: '-auto-approve $(Agent.TempDirectory)/tfplanfile'
+        environmentServiceNameAzureRM: '$(SERVICECONNECTION)'
+        workingDirectory: $(Build.SourcesDirectory)/infrastructure
