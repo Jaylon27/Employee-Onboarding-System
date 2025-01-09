@@ -2,12 +2,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pyodbc 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Database credentials
-username = "jaylonjones"
-password = "Panthers27!"  
-server = "employeesystemdatabaseforonboarding.database.windows.net"
-database = "EmployeeSystemOnboardingDatabaseSQL"
+username = os.getenv("DB_USERNAME")
+password = os.getenv("DB_PASSWORD")
+server = os.getenv("DB_SERVER")
+database = os.getenv("DB_NAME")
 
 # Correct Connection string for SQLAlchemy
 connection_string = f"mssql+pyodbc://{username}:{password}@{server}:1433/{database}?driver=ODBC+Driver+18+for+SQL+Server&Encrypt=yes&TrustServerCertificate=no&Connection+Timeout=30"
