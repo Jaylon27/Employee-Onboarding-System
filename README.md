@@ -21,7 +21,7 @@
 
 ## Problem Statement
 
-XYZ Corp, a mid-sized company, faces significant challenges in efficiently managing the employee onboarding process. The HR department is responsible for manually tracking new hire details, such as contact information, roles, departments, and equipment needs. This manual process: 
+XYZ Corp, a mid-sized company, faces significant challenges in efficiently managing the employee onboarding process. The HR department is responsible for manually tracking new hire details, such as contact information, roles, departments, and equipment needs. This manual process is: 
 
 - **Time-consuming**  
 - **Error-prone**  
@@ -113,7 +113,7 @@ This system uses a range of Azure resources to provide a robust infrastructure f
 5. **Azure Container Registry**
     - **Purpose:** Stores the Docker image used by the Azure App Service.  
     - **Details:** 
-        - The Azure Container Registry is a private registry where the Docker image of the application is stored. T
+        - The Azure Container Registry is a private registry where the Docker image of the application is stored.
         - The App Service pulls this image from the registry during deployment.
 
 6. **Azure SQL Database**
@@ -287,7 +287,7 @@ terraform apply
 Once the users are created and assigned to groups, you can verify their membership using Azure CLI commands. Below are examples of queries and their corresponding results.
 
 ##### Query Groups
-To list the groups in Azure AD that match specific keywords like `Information Technology` or `Human Resources`, use the following commands:
+To list the groups in Microsoft Entra ID that match specific keywords like `Information Technology` or `Human Resources`, use the following commands:
 
 ```bash
 az ad group list --query "[?contains(displayName, 'Information Technology')].{ name: displayName }" --output tsv
