@@ -22,13 +22,6 @@ def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(data
     db.commit()
     db.refresh(db_employee)
 
-    get_department_name = db.query(models.Department).filter(models.Department.id == db_employee.department_id).first()
-    department_name = get_department_name.name
-
-    with open('users/users.csv', mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([db_employee.first_name, db_employee.last_name, db_employee.job_title, department_name])
-
     return schemas.EmployeeRead.from_orm(db_employee)  
 
 @router.get("/employees/{employee_id}", response_model=schemas.EmployeeRead, status_code=status.HTTP_200_OK)
